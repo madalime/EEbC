@@ -1,16 +1,16 @@
-# Type-Based Energy Efficiency-by-Construction
-This repository contains the tool support of the paper *Type-Based Energy Efficiency-by-Construction* by Jarebica et al.[^1]
+# Energy Efficiency-by-Construction
+This repository contains tool support of the paper *Energy Efficiency-by-Construction* by Kodetzki et al.[^1] submitted to ICTAC 2026.
 
-[^1]: Jarebica, J., Kodetzki, M., Potanin, A., & Schaefer, I.: Type-Based Energy Efficiency-by-Construction. Submitted 
+[^1]: Kodetzki, M., Jarebica, J., Potanin, A., & Schaefer, I.: Energy Efficiency-by-Construction. Submitted 
 
 This repository provides:
-- A parser to extract an abstract syntax tree (AST) from a CbC model file created with [CorC](https://github.com/KIT-TVA/CorC)
-- An implementation of the energy type system that derives energy types for complete and partial ASTs
+- A parser to extract an abstract syntax tree (AST) from a CbC model file created with [CorC](https://github.com/KIT-TVA/CorC).
+- An implementation of the energy type system that derives energy types for complete and partial ASTs.
 
 ## Requirements
-- A Java Development Kit (JDK) 24 of your choice, tested with the [Oracle OpenJDK](https://openjdk.org/)
-- A current version of [Maven](https://maven.apache.org/) to build the project
-- [CorC](https://github.com/KIT-TVA/CorC) to create CbC model files
+- A Java Development Kit (JDK) 24 of your choice, tested with the [Oracle OpenJDK](https://openjdk.org/).
+- A current version of [Maven](https://maven.apache.org/) to build the project.
+- [CorC](https://github.com/KIT-TVA/CorC) to create CbC model files.
 
 ## Usage
 Given a CbC model file at `example.cbcmodel`, the following example will extract the AST from the file:
