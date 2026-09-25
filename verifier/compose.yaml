@@ -1,0 +1,30 @@
+# EEbC Verifier for WebCorC: build and start with one command from the repository root:
+#   docker compose -f verifier/compose.yaml up --build
+# It joins WebCorC's existing `verifiers` network and is reachable there as http://eebc-verifier:8080.
+# Without WebCorC running, create the network first: docker network create verifiers
+# Settings are the environment variables below (see README); change them here.
+
+services:
+  eebc-verifier:
+    build:
+      context: ..                   # repository root: the image also builds the EEbC library
+      dockerfile: verifier/Dockerfile
+    image: eebc-verifier
+    container_name: eebc-verifier
+    # No host port needed; uncomment to reach it from the host for local testing.
+    # ports:
+    #   - "8080:8080"
+    environment:
+      VERIFIER_PORT: "8080"         # HTTP/WebSocket port; WebCorC expects 8080
+      VERIFIER_HOST: "0.0.0.0"      # bind address
+      # VERIFIER_THREADS: "4"       # worker pool size (default: number of CPU cores)
+      VERIFIER_STACK_MB: "256"      # stack size of each analysis thread
+      VERIFIER_JOB_TTL_MINUTES: "60" # retention of finished, unfetched jobs
+    networks:
+      verifiers:
+        aliases: [eebc-verifier]
+    restart: unless-stopped
+
+networks:
+  verifiers:
+    external: true                  # created by WebCorC; not managed by this project

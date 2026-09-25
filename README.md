@@ -146,6 +146,12 @@ Or build and run the Docker image (build context: the repository root):
 docker build -f verifier/Dockerfile -t eebc-verifier .
 docker run --rm -p 8080:8080 eebc-verifier
 ```
+Or build and start it in one step with Docker Compose; the settings are in `verifier/compose.yaml`:
+```shell
+docker compose -f verifier/compose.yaml up --build
+```
+The Compose service joins WebCorC's existing external `verifiers` network as `eebc-verifier` (port 8080) and
+publishes no host port. Without WebCorC, create the network first with `docker network create verifiers`.
 Register the Verifier in WebCorC under its base URL, e.g. `http://eebc-verifier:8080`. `GET /description` returns
 its Self-Description.
 
