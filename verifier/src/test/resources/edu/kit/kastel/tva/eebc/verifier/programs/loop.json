@@ -1,0 +1,15 @@
+{
+  "name": "Loop",
+  "javaVariables": ["int i", "int n"],
+  "statement": {
+    "id": 1, "name": "program", "type": "COMPOSITION",
+    "firstStatement": { "id": 2, "name": "init", "type": "STATEMENT", "programStatement": "i = 0;" },
+    "secondStatement": {
+      "id": 3, "name": "count", "type": "REPETITION",
+      "guard": { "condition": "i < n" },
+      "invariant": { "condition": "i <= n" },
+      "variant": { "condition": "n - i" },
+      "loopStatement": { "id": 4, "name": "step", "type": "STATEMENT", "programStatement": "i = i + 1;" }
+    }
+  }
+}

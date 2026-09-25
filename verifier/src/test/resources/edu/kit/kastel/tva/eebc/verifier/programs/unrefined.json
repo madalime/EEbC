@@ -1,0 +1,9 @@
+{
+  "name": "Unrefined",
+  "javaVariables": ["int y"],
+  "statement": {
+    "id": 1, "name": "program", "type": "COMPOSITION",
+    "firstStatement": { "id": 2, "name": "todo", "type": "STATEMENT", "programStatement": "" },
+    "secondStatement": { "id": 3, "name": "set", "type": "STATEMENT", "programStatement": "y = 1;" }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Exponentiation",
+  "javaVariables": ["int a", "int n", "int i", "int b", "int z"],
+  "preCondition": { "condition": "energy <= 100" },
+  "statement": {
+    "id": 1,
+    "name": "compositionStatement",
+    "type": "COMPOSITION",
+    "intermediateCondition": { "condition": "energy <= 10" },
+    "firstStatement": {
+      "id": 2,
+      "name": "init",
+      "type": "STATEMENT",
+      "programStatement": "i = n-1; b = a; z = a;"
+    },
+    "secondStatement": {
+      "id": 3,
+      "name": "loop",
+      "type": "REPETITION",
+      "guard": { "condition": "i != 0" },
+      "invariant": { "condition": "z * pow(b,i) = pow(a,n)" },
+      "variant": { "condition": "i" },
+      "loopStatement": {
+        "id": 4,
+        "name": "selection",
+        "type": "SELECTION",
+        "guards": [
+          { "condition": "i%2 == 0" },
+          { "condition": "i%2 == 1" }
+        ],
+        "commands": [
+          { "id": 5, "name": "even", "type": "STATEMENT", "programStatement": "i = i/2; b = b*b;" },
+          { "id": 6, "name": "odd", "type": "STATEMENT", "programStatement": "i = i-1; z = z*b;" }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "TwoAssignments",
+  "javaVariables": ["int x", "int y"],
+  "statement": {
+    "id": 1, "name": "both", "type": "COMPOSITION",
+    "firstStatement": { "id": 2, "name": "setX", "type": "STATEMENT", "programStatement": "x = 1;" },
+    "secondStatement": { "id": 3, "name": "setY", "type": "STATEMENT", "programStatement": "y = 2;" }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Unsupported",
+  "javaVariables": ["int i", "int x", "int y"],
+  "statement": {
+    "id": 1, "name": "program", "type": "COMPOSITION",
+    "firstStatement": { "id": 2, "name": "setX", "type": "STATEMENT", "programStatement": "x = 1;" },
+    "secondStatement": {
+      "id": 3, "name": "rest", "type": "COMPOSITION",
+      "firstStatement": { "id": 4, "name": "inc", "type": "STATEMENT", "programStatement": "i++;" },
+      "secondStatement": { "id": 5, "name": "setY", "type": "STATEMENT", "programStatement": "y = 2;" }
+    }
+  }
+}

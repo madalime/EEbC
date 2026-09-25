@@ -18,7 +18,7 @@ public class Demo {
     public static void main(String[] args) throws Exception {
         // check that at least one argument is given (the path to the model file)
         if (args.length < 1) {
-            System.err.println("usage: Demo <path/to/example.cbcmodel> [var=value ...]");
+            System.err.println("usage: Demo <path/to/example.cbcmodel | path/to/webcorc-program.json> [var=value ...]");
             System.exit(1);
         }
 

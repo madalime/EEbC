@@ -1,0 +1,12 @@
+{
+  "name": "Branch",
+  "javaVariables": ["int x", "int y", "int z"],
+  "statement": {
+    "id": 1, "name": "choose", "type": "SELECTION",
+    "guards": [ { "condition": "x > 0" }, { "condition": "x <= 0" } ],
+    "commands": [
+      { "id": 2, "name": "positive", "type": "STATEMENT", "programStatement": "y = 1;" },
+      { "id": 3, "name": "other", "type": "STATEMENT", "programStatement": "y = 2; z = 3;" }
+    ]
+  }
+}

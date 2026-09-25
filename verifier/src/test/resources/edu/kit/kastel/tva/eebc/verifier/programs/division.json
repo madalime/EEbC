@@ -1,0 +1,9 @@
+{
+  "name": "Division",
+  "javaVariables": ["int x", "int y"],
+  "statement": {
+    "id": 1, "name": "program", "type": "COMPOSITION",
+    "firstStatement": { "id": 2, "name": "zero", "type": "STATEMENT", "programStatement": "x = 0;" },
+    "secondStatement": { "id": 3, "name": "divide", "type": "STATEMENT", "programStatement": "y = 1 / x;" }
+  }
+}
