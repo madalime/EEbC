@@ -10,6 +10,7 @@ import edu.kit.kastel.tva.eebc.verifier.analysis.HardwareModels;
 import edu.kit.kastel.tva.eebc.verifier.analysis.InvalidRequestException;
 import edu.kit.kastel.tva.eebc.verifier.analysis.StatementResult;
 import io.javalin.Javalin;
+import io.javalin.config.RoutesConfig;
 import io.javalin.http.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,16 +93,20 @@ public final class VerifierServer implements AutoCloseable {
     }
 
     private Javalin createApp() {
-        Javalin javalin = Javalin.create(config -> {
-            config.showJavalinBanner = false;
-            // WebCorC waits for done without a time limit, so the stream must not time out while a job runs
-            config.jetty.modifyWebSocketServletFactory(factory -> factory.setIdleTimeout(Duration.ofDays(7)));
+        return Javalin.create(config -> {
+            config.startup.showJavalinBanner = false;
+            // WebCorC waits for done without a time limit; a stream that stays silent for 3 hours is closed, but its
+            // job keeps running and its result stays fetchable
+            config.jetty.modifyWebSocketServletFactory(factory -> factory.setIdleTimeout(Duration.ofHours(3)));
+            registerRoutes(config.routes);
         });
+    }
 
-        javalin.get("/description", this::description);
-        javalin.post("/jobs/{id}", this::startJob);
-        javalin.get("/jobs/{id}/result", this::result);
-        javalin.wsBeforeUpgrade("/jobs/{id}", ctx -> {
+    private void registerRoutes(RoutesConfig routes) {
+        routes.get("/description", this::description);
+        routes.post("/jobs/{id}", this::startJob);
+        routes.get("/jobs/{id}/result", this::result);
+        routes.wsBeforeUpgrade("/jobs/{id}", ctx -> {
             Job job = jobs.get(ctx.pathParam("id"));
             if (job == null) {
                 throw new ProblemException(404, "Unknown job '" + ctx.pathParam("id") + "'");
@@ -110,7 +115,7 @@ public final class VerifierServer implements AutoCloseable {
                 throw new ProblemException(409, "Job '" + job.id() + "' already has a status stream");
             }
         });
-        javalin.ws("/jobs/{id}", ws -> {
+        routes.ws("/jobs/{id}", ws -> {
             ws.onConnect(ctx -> {
                 Job job = jobs.get(ctx.pathParam("id"));
                 if (job == null) { // deleted between handshake and connect
@@ -128,22 +133,21 @@ public final class VerifierServer implements AutoCloseable {
             ws.onError(ctx -> LOG.debug("Status stream error for job {}", ctx.pathParam("id"), ctx.error()));
         });
 
-        javalin.exception(ProblemException.class, (e, ctx) -> problem(ctx, e.status(), e.getMessage()));
-        javalin.exception(Exception.class, (e, ctx) -> {
+        routes.exception(ProblemException.class, (e, ctx) -> problem(ctx, e.status(), e.getMessage()));
+        routes.exception(Exception.class, (e, ctx) -> {
             LOG.error("Internal error on {} {}", ctx.method(), ctx.path(), e);
             problem(ctx, 500, "Internal error of the EEbC Verifier");
         });
-        javalin.error(404, ctx -> {
+        routes.error(404, ctx -> {
             if (!isProblem(ctx)) {
                 problem(ctx, 404, "Not found: " + ctx.path());
             }
         });
-        javalin.error(405, ctx -> {
+        routes.error(405, ctx -> {
             if (!isProblem(ctx)) {
                 problem(ctx, 405, "Method not allowed: " + ctx.method() + " " + ctx.path());
             }
         });
-        return javalin;
     }
 
     private void description(Context ctx) throws JsonProcessingException {

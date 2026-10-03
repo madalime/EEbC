@@ -14,7 +14,7 @@
         <maven.compiler.release>24</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <eebc.version>1.0.0-SNAPSHOT</eebc.version>
-        <javalin.version>6.7.0</javalin.version>
+        <javalin.version>7.2.3</javalin.version>
         <slf4j.version>2.0.17</slf4j.version>
         <jackson.version>2.18.2</jackson.version>
         <junit.version>5.13.0</junit.version>
